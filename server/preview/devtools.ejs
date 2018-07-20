@@ -45,7 +45,7 @@
         left: 20px;
         width: 65%;
         height: 400px;
-        overflow-y: auto;
+        overflow: auto;
     }
 
     .devtools .toolbox ul{
@@ -108,11 +108,38 @@
         background: #19ad19;
     }
 
+    @keyframes border-pulsate {
+        0%   { outline-color: rgb(238, 0, 0); }
+
+        25% { outline-color:  rgba(255, 0, 0, 0); }
+
+        50%   { outline-color: rgb(238, 0, 0); }
+
+        75% { outline-color:  rgba(255, 0, 0, 0); }
+
+        100%   { outline-color: rgb(238, 0, 0); }
+    }
+
+    .focusElement{
+        outline: 3px solid !important;
+        animation: border-pulsate 2.5s infinite;
+    }
+
 </style>
 
 
 <script>
     app.controller('devtools', function($scope){
+
+
+        $scope.isShowing = false
+        $(document).keydown(function(e) {
+            if(e.altKey &&  e.which === 71){ //alt + G (71)
+                $scope.isShowing = !$scope.isShowing
+                $('.toolbox')[(!$scope.isShowing) ? 'fadeOut' : 'fadeIn']()
+            }
+            //   console.log('key code is: ' + e.which + ' ' + (e.ctrlKey ? 'Ctrl' : '') + ' ' + (e.shiftKey ? 'Shift' : '') + ' ' + (e.altKey ? 'Alt' : ''));
+        })
 
         $scope.output = []
         $scope.results = {
@@ -128,12 +155,14 @@
 
         $scope.hasEmpty = function(obj){
             for(var k in obj){
-                if(obj[k]){
-                    if(obj[k].trim() === ''){
+                if(typeof  obj[k] === 'string'){
+                    if(obj[k]){
+                        if(obj[k].trim() === ''){
+                            return true
+                        }
+                    }else{
                         return true
                     }
-                }else{
-                    return true
                 }
             }
             return false
@@ -151,12 +180,14 @@
             if(!disableClear){
                 $scope.output = []
             }
-            $('img, source').each(function(){
+            $('#_appRoot img, #_appRoot source').each(function(){
                 var obj = {
                     name : $(this)[0].localName + '/src',
                     message : ($(this)[0].localName === 'source') ? 'N/A' : $(this).attr('alt'),
                     text : 'N/A',
                     src : ($(this)[0].localName === 'source') ? $(this).attr('srcset') : $(this).attr('src'),
+                    element : $(this),
+                    class : $(this).attr('class')
                 }
                 obj.valid = !$scope.hasEmpty(obj)
                 $scope.output.push(obj)
@@ -167,7 +198,7 @@
             if(!disableClear){
                 $scope.output = []
             }
-            $('img').each(function(){
+            $('#_appRoot img').each(function(){
                 if(!$(this).attr('alt') || $(this).attr('alt').trim() === ''){
                     $scope.results.alt.empty++
                 }
@@ -176,7 +207,9 @@
                     name : $(this)[0].localName + '/alt',
                     message : $(this).attr('alt'),
                     text : 'N/A',
-                    src : $(this).attr('src')
+                    src : $(this).attr('src'),
+                    element : $(this),
+                    class : $(this).attr('class')
                 }
                 obj.valid = !$scope.hasEmpty(obj)
                 $scope.output.push(obj)
@@ -187,7 +220,7 @@
             if(!disableClear){
                 $scope.output = []
             }
-            $('a, button').each(function(){
+            $('#_appRoot a, #_appRoot button').each(function(){
                 if(!$(this).attr('aria-label') || $(this).attr('aria-label').trim() === ''){
                     $scope.results.aria.empty++
                 }
@@ -196,26 +229,34 @@
                     name : $(this)[0].localName + '/aria-label',
                     text : $(this).text(),
                     message : $(this).attr('aria-label'),
-                    src : ($(this)[0].localName === 'a') ? $(this).attr('href') : 'N/A'
+                    src : ($(this)[0].localName === 'a') ? $(this).attr('href') : 'N/A',
+                    element : $(this),
+                    class : $(this).attr('class')
                 }
                 obj.valid = !$scope.hasEmpty(obj)
                 $scope.output.push(obj)
             })
         }
 
-    })
-
-
-    $(function(){
-        var isShowing = false
-        $(document).keydown(function(e) {
-            if(e.altKey &&  e.which === 71){ //alt + G (71)
-                isShowing = !isShowing
-                $('.toolbox')[(!isShowing) ? 'fadeOut' : 'fadeIn']()
+        $scope.currentFocusElement = null
+        $scope.find = function(ele){
+            if($scope.currentFocusElement){
+                $scope.currentFocusElement.removeClass('focusElement')
             }
-            //   console.log('key code is: ' + e.which + ' ' + (e.ctrlKey ? 'Ctrl' : '') + ' ' + (e.shiftKey ? 'Shift' : '') + ' ' + (e.altKey ? 'Alt' : ''));
-        })
-    })   
+            $scope.currentFocusElement = ele
+            $scope.currentFocusElement.addClass('focusElement')
+            $scope.currentFocusElement.focus()
+            $scope.isShowing = false
+            $('.toolbox').fadeOut()
+            
+            //scroll to element
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $scope.currentFocusElement.offset().top - 150
+            }, 2000);
+        }
+
+    })
+ 
 
 </script>
 
@@ -269,13 +310,15 @@
                         <th>Text</th>
                         <th>Value</th>
                         <th>Source</th>
+                        <th>Classes</th>
                     </tr>
                     <tr ng-repeat="out in output">
-                        <td><span class="valid-check" ng-class="(out.valid) ? 'valid' : ''"></span></td>
+                        <td><span class="valid-check" ng-class="(out.valid) ? 'valid' : ''" ng-click="find(out.element)"></span></td>
                         <td>{{ out.name }}</td>
                         <td>{{ out.text }}</td>
                         <td>{{ out.message }}</td>
                         <td>{{ out.src }}</td>
+                        <td>{{ out.class }}</td>
                     </tr>
                 </table>
             </div>

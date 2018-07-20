@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <style>
             <%- data.code.CSS %>
 
@@ -10,13 +11,17 @@
         </style>       
     </head>
     <body>
-        <%- data.code.HTML %>
+       
+        <div id="_appRoot">
+            <%- data.code.HTML %>
 
-        <% for (var k in data.components) { %>
-            <%- data.components[k].code.HTML %>
-        <% } %>
+            <% for (var k in data.components) { %>
+                <%- data.components[k].code.HTML %>
+            <% } %>
+        </div>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+        
         <script>
             <%- data.code.JS %>
 
@@ -25,7 +30,7 @@
             <% } %>
 
         </script>
-
+        
 
         <%- include('devtools'); %>
 

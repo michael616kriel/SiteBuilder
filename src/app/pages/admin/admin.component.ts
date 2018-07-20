@@ -57,11 +57,12 @@ export class AdminComponent implements OnInit {
   //basic config for editor
   config = {
     lineNumbers: true,
-    lineWrapping: true,
+  //  lineWrapping: true,
     theme : 'ambiance',
     autofocus: true,
     matchBrackets: true,
     foldGutter: true,
+    lineWiseCopyCut : false,
     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     extraKeys: {
       "Ctrl-Space": "autocomplete",
@@ -387,7 +388,9 @@ export class AdminComponent implements OnInit {
 
 
   delete(project){
-    confirm('are you sure you want to delete : ' + project.name + ' ?')
+    if(!confirm('are you sure you want to delete : ' + project.name + ' ?')){
+      return
+    }
     this.http.post('http://localhost:8081/project/delete', { id : project.id }).subscribe(res => {
       this.showToast('Project Deleted successfully!')
       for(var k=0; k < this.projects.length; k++){
@@ -400,7 +403,9 @@ export class AdminComponent implements OnInit {
   }
 
   deleteComponent(comp, key){
-    confirm('are you sure you want to delete : ' + comp.name + ' ?')
+    if(!confirm('are you sure you want to delete : ' + comp.name + ' ?')){
+      return
+    }
     this.project.components.splice(key, 1)
     this.http.post('http://localhost:8081/project/update', { data : this.project, id : this.project.id }).subscribe(res => {
       this.showToast('Component Deleted successfully!')
