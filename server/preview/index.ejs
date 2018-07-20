@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <style>
+            <%- data.code.CSS %>
+
+            <% for (var k in data.components) { %>
+                <%- data.components[k].code.CSS %>
+            <% } %>
+
+        </style>       
+    </head>
+    <body>
+        <%- data.code.HTML %>
+
+        <% for (var k in data.components) { %>
+            <%- data.components[k].code.HTML %>
+        <% } %>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+        <script>
+            <%- data.code.JS %>
+
+            <% for (var k in data.components) { %>
+                <%- data.components[k].code.JS %>
+            <% } %>
+
+        </script>
+
+
+        <%- include('devtools'); %>
+
+        
+    </body>
+</html>

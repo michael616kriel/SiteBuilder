@@ -1,0 +1,96 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('./app/pages/admin/codemirror/customEditor.scss');
+
+body, html {
+    height: 100%;
+    display: block;
+    width: 100%;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* width */
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+hr {
+    border-top: 1px solid;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: 10px 0 10px 0;
+}
+
+
+//GRID SYSTEM
+
+//----- Extends
+%clearfix:after {
+	display:block;
+	clear:both;
+	content:'';
+}
+
+//----- Grid System
+$grid-spacing:3%;
+
+.row, .btn-grid {
+    @extend %clearfix;
+    text-align: center;
+	& + & {
+		margin-top:$grid-spacing;
+    }
+    @for $i from 1 through 12 {
+        & .col-#{$i} {
+            // float:left;
+            margin-right:$grid-spacing;
+            -webkit-box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            box-sizing:border-box;
+            &:last-child {
+                margin-right:0%;
+            }
+            &:nth-child(#{$i - 1}n){
+                margin-right:0%;
+            }
+        }
+    }
+}
+
+//----- Columns (Automatic)
+.col-1 { width:(100% / 12) - ($grid-spacing * 11 / 12); }
+.col-2 { width:(100% / 6) - ($grid-spacing * 10 / 12); }
+.col-3 { width:(100% / 4) - ($grid-spacing * 9 / 12); }
+.col-4 { width:(100% / 3) - ($grid-spacing * 8 / 12); }
+.col-5 { width:(100% / 2.4) - ($grid-spacing * 7 / 12); }
+.col-6 { width:(100% / 2) - ($grid-spacing * 6 / 12); }
+.col-7 { width:(100% / 1.714285714285714) - ($grid-spacing * 5 / 12); }
+.col-8 { width:(100% / 1.5) - ($grid-spacing * 4 / 12); }
+.col-9 { width:(100% / 1.333333333333333) - ($grid-spacing * 3 / 12); }
+.col-10 { width:(100% / 1.2) - ($grid-spacing * 2 / 12); }
+.col-11 { width:(100% / 1.090909090909091) - ($grid-spacing * 1 / 12); }
+.col-12 { width:100%; }

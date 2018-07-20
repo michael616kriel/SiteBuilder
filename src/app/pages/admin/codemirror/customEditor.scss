@@ -1,0 +1,25 @@
+
+
+.CodeMirror {
+    height: 100%;
+}
+
+.html-mode pre.CodeMirror-line {
+    color: #fff;
+}
+
+.html-mode .cm-tag {
+    color: #4f6dc2;
+}
+
+.html-mode .cm-tag.cm-bracket {
+    color: #616161;
+}
+
+.html-mode .cm-attribute {
+    color: #92baf5;
+}
+
+.html-mode .cm-string {
+    color: #ff9c77;
+}

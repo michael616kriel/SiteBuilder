@@ -23,7 +23,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/addon/hint/show-hint.css",
+              "node_modules/codemirror/addon/fold/foldgutter.css",
+              "node_modules/codemirror/addon/dialog/dialog.css",
+              "node_modules/codemirror/addon/search/matchesonscrollbar.css",
+              "node_modules/codemirror/theme/ambiance.css",
+              "src/assets/icons/themify-icons.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -72,7 +79,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -118,5 +125,10 @@
       }
     }
   },
-  "defaultProject": "siteBuilder"
+  "defaultProject": "siteBuilder",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

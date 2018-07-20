@@ -1,0 +1,286 @@
+
+<style>
+
+    /* width */
+    .devtools .toolbox::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    .devtools .toolbox::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+
+    /* Handle */
+    .devtools .toolbox::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+
+    /* Handle on hover */
+    .devtools .toolbox::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+
+    .devtools .toolbox{
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #666;
+        border-top: 2px solid #006da4;
+        z-index: 99999912;
+        display: block;
+        width: 300px;
+        height: 400px;
+        display: none;
+        box-sizing: border-box;
+    }
+
+    .devtools .toolbox .inner{
+        position: relative;
+        width: 100%;
+    }
+
+    .devtools .toolbox.debug{
+        right: unset;
+        left: 20px;
+        width: 65%;
+        height: 400px;
+        overflow-y: auto;
+    }
+
+    .devtools .toolbox ul{
+        font-size: 12px;
+    }
+
+    .devtools .toolbox .content{
+        padding: 5px;
+    }
+
+    .devtools button{
+        background: #333;
+        border: none;
+        height: 25px;
+        color: #b3b3b3;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .devtools  button.full-width {
+        width: 100%;
+    }
+
+    .devtools  label {
+        width: 100%;
+        background: #111;
+        color: #fff;
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        padding: 3px 0;
+        margin-bottom: 5px;
+    }
+
+
+
+    .devtools  table, th, td {
+        border: 1px solid black;
+        color : #111;
+        padding: 5px;
+    }
+
+
+    .devtools table {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .devtools th {
+        height: 50px;
+    }
+
+    span.valid-check {
+        background: red;
+        height: 15px;
+        width: 15px;
+        display: block;
+    }
+    span.valid-check.valid{
+        background: #19ad19;
+    }
+
+</style>
+
+
+<script>
+    app.controller('devtools', function($scope){
+
+        $scope.output = []
+        $scope.results = {
+            alt : {
+                empty : 0,
+                total : 0
+            },
+            aria : {
+                empty : 0,
+                total : 0
+            },
+        }
+
+        $scope.hasEmpty = function(obj){
+            for(var k in obj){
+                if(obj[k]){
+                    if(obj[k].trim() === ''){
+                        return true
+                    }
+                }else{
+                    return true
+                }
+            }
+            return false
+        }
+
+        $scope.checkAll = function(){
+            $scope.output = []
+            $scope.checkAlt(true)
+            $scope.checkAria(true)
+            $scope.checkImages(true)
+        }
+
+
+        $scope.checkImages = function(disableClear){
+            if(!disableClear){
+                $scope.output = []
+            }
+            $('img, source').each(function(){
+                var obj = {
+                    name : $(this)[0].localName + '/src',
+                    message : ($(this)[0].localName === 'source') ? 'N/A' : $(this).attr('alt'),
+                    text : 'N/A',
+                    src : ($(this)[0].localName === 'source') ? $(this).attr('srcset') : $(this).attr('src'),
+                }
+                obj.valid = !$scope.hasEmpty(obj)
+                $scope.output.push(obj)
+            })
+        }
+
+        $scope.checkAlt = function(disableClear){
+            if(!disableClear){
+                $scope.output = []
+            }
+            $('img').each(function(){
+                if(!$(this).attr('alt') || $(this).attr('alt').trim() === ''){
+                    $scope.results.alt.empty++
+                }
+                $scope.results.alt.total++
+                var obj = {
+                    name : $(this)[0].localName + '/alt',
+                    message : $(this).attr('alt'),
+                    text : 'N/A',
+                    src : $(this).attr('src')
+                }
+                obj.valid = !$scope.hasEmpty(obj)
+                $scope.output.push(obj)
+            })
+        }
+
+        $scope.checkAria = function(disableClear){
+            if(!disableClear){
+                $scope.output = []
+            }
+            $('a, button').each(function(){
+                if(!$(this).attr('aria-label') || $(this).attr('aria-label').trim() === ''){
+                    $scope.results.aria.empty++
+                }
+                $scope.results.aria.total++
+                var obj = {
+                    name : $(this)[0].localName + '/aria-label',
+                    text : $(this).text(),
+                    message : $(this).attr('aria-label'),
+                    src : ($(this)[0].localName === 'a') ? $(this).attr('href') : 'N/A'
+                }
+                obj.valid = !$scope.hasEmpty(obj)
+                $scope.output.push(obj)
+            })
+        }
+
+    })
+
+
+    $(function(){
+        var isShowing = false
+        $(document).keydown(function(e) {
+            if(e.altKey &&  e.which === 71){ //alt + G (71)
+                isShowing = !isShowing
+                $('.toolbox')[(!isShowing) ? 'fadeOut' : 'fadeIn']()
+            }
+            //   console.log('key code is: ' + e.which + ' ' + (e.ctrlKey ? 'Ctrl' : '') + ' ' + (e.shiftKey ? 'Shift' : '') + ' ' + (e.altKey ? 'Alt' : ''));
+        })
+    })   
+
+</script>
+
+<div ng-controller="devtools" class="devtools">
+
+        <div class="toolbox">
+
+            <div class="inner">
+                <label>Toolbox</label>
+    
+                <div class="content">
+                    <button class="full-width check" ng-click="checkAll()">Full QA Check</button>
+                    <button class="full-width" ng-click="checkAlt()">Check Alt tags</button>
+                    <button class="full-width check" ng-click="checkAria()">Check Aria-labels</button>
+                    <button class="full-width check" ng-click="checkImages()">Check Images</button>
+        
+                    
+                    <table class="three">
+                        <tr>
+                            <th>type</th>
+                            <th>empty</th>
+                            <th>total</th>
+                        </tr>
+                        <tr>
+                            <td>Alt tags</td>
+                            <td>{{ results.alt.empty }}</td>
+                            <td>{{ results.alt.total }}</td>
+                        </tr>
+                        <tr>
+                            <td>Aria Labels</td>
+                            <td>{{ results.aria.empty }}</td>
+                            <td>{{ results.aria.total }}</td>
+                        </tr>
+                    </table>
+    
+                </div>
+            </div>
+        
+        </div>
+        
+        
+        <div class="toolbox debug">
+            
+            <div class="inner">
+                <label>Output</label>
+
+                <table>
+                    <tr>
+                        <th>Passed</th>
+                        <th>Type</th>
+                        <th>Text</th>
+                        <th>Value</th>
+                        <th>Source</th>
+                    </tr>
+                    <tr ng-repeat="out in output">
+                        <td><span class="valid-check" ng-class="(out.valid) ? 'valid' : ''"></span></td>
+                        <td>{{ out.name }}</td>
+                        <td>{{ out.text }}</td>
+                        <td>{{ out.message }}</td>
+                        <td>{{ out.src }}</td>
+                    </tr>
+                </table>
+            </div>
+        
+        
+        </div>
+
+</div>

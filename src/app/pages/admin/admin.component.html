@@ -1,0 +1,193 @@
+<div class="container">
+
+  <div class="title-bar">{{ projectTitle() }}</div>
+
+  <div class="top">
+    <div class="left">
+      
+    </div>
+    <div class="center">
+      <ul class="tabs">
+        <li [ngClass]="(tab.active) ? 'active' : ''" *ngFor="let tab of tabs" (click)="switchTabs(tab)">{{ tab.name }}</li>
+      </ul>
+    </div>
+    <div class="right">
+
+    </div>
+  </div>
+
+  <div class="sidebar">
+
+    <label>Projects</label>
+
+
+    <!-- PROJECT LIST -->
+    <ul class="options">
+      <li class="dropdown" [ngClass]="(project.active) ? 'active' : ''" *ngFor="let project of projects">
+          <span (click)="setEdit(project, null)">
+            <i class="ti ti-folder"></i> {{ project.name }}
+          </span>
+          <button class="close-btn" (click)="delete(project)"><i class="ti ti-close"></i></button>
+          <ul class="dropdown-menu">
+            <li>
+              <span (click)="setEdit(project, null)">
+                <i class="ti ti-file"></i> Application
+              </span>
+            </li>
+            <li>
+              <span><i class="ti ti-plug"></i> Components</span>
+              <ul class="dropdown-menu">
+                  <li *ngFor="let component of project.components" [ngClass]="(component.active) ? 'active' : ''">
+                    <span (click)="setEdit(project, component)">
+                      <i class="ti ti-file"></i> {{ component.name }}
+                    </span>
+                    <button class="close-btn" (click)="deleteComponent(component, getIndex(component))"><i class="ti ti-trash"></i></button>
+                  </li>
+                </ul>
+            </li>
+          </ul>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="content">
+      <!-- EDITOR -->
+      <codemirror [ngClass]="getEditorClass()" #editor [(ngModel)]="codeEdit.code[active]" [config]="config"></codemirror>
+  </div>
+
+  <div class="sidebar right">
+
+
+      <div class="block">
+          <div class="btn-group">
+              <button class="btn primary" (click)="saveProject()">Save</button>
+              <button class="btn primary" (click)="preview()">Preview</button>
+          </div>
+      </div>
+
+    <label>Current</label>
+
+    <ul class="options accordian">
+      <li class="accordian">
+        <span>Project</span>
+        <button class="collapse-btn"><i class="ti ti-angle-up"></i></button>
+        <ul class="accordian-menu">
+          <li>
+              
+              <div class="input">
+                  <label>Name</label>
+                  <input type="text" value="" [(ngModel)]="project.name"/>
+              </div>
+      
+              <div class="input">
+                  <label>Description</label>
+                  <input type="text" value="" [(ngModel)]="project.description"/>
+              </div>
+
+          </li>
+        </ul>
+
+      </li>
+      <li class="accordian">
+        <span>Component</span>
+        <button class="collapse-btn"><i class="ti ti-angle-up"></i></button>
+        
+        <ul class="accordian-menu">
+            <li *ngIf="!isComponentActive()"><p>no component select..</p></li>
+            <li>
+                
+              <div *ngFor="let comp of project.components">
+                  <div class="input" *ngIf="comp.active">
+                      <label>Current Component Name</label>
+                      <input type="text" value="" [(ngModel)]="comp.name"/>
+                  </div>
+              </div>
+            
+            </li>
+          </ul>
+
+      </li>
+    </ul>
+
+
+  
+
+
+    <label>Create</label>
+
+    <ul class="options accordian">
+        <li class="accordian">
+          <span>Project</span>
+          <button class="collapse-btn"><i class="ti ti-angle-up"></i></button>
+          <ul class="accordian-menu">
+            <li>
+                
+                <div class="input">
+                    <label>Name</label>
+                    <input type="text" value="" [(ngModel)]="createModels.project.name"/>
+                </div>
+        
+        
+                <button class="btn full-width" (click)="createProjects()">Create</button>
+
+            </li>
+          </ul>
+  
+        </li>
+        <li class="accordian">
+          <span>Component</span>
+          <button class="collapse-btn"><i class="ti ti-angle-up"></i></button>
+          <ul class="accordian-menu">
+              <li>
+                  
+                  <div class="input">
+                      <label>Name</label>
+                      <input type="text" value="" [(ngModel)]="createModels.component.name"/>
+                  </div>
+          
+                  <button class="btn full-width" (click)="createComponent()">Create</button>
+
+              </li>
+            </ul>
+  
+        </li>
+      </ul>
+
+      <label>Utils</label>
+
+      <div class="block">
+        
+        <div class="input">
+          <label>Component</label>
+          <select [(ngModel)]="utilModel.component">
+            <option *ngFor="let component of project.components" [ngValue]="component.name">{{ component.name }}</option>
+          </select>
+        </div>
+
+        <button class="btn full-width" (click)="generateComponent()">Generate</button>
+        <hr/>
+        
+
+        <div class="row">
+            <button class="btn col-4" *ngFor="let util of utils" (click)="util.action()"><i class="{{ util.icon }}"></i></button>
+        </div>
+
+
+      </div>
+
+   
+  </div>
+  <div class="footer"></div>
+
+</div>
+
+
+
+<div class="modal">
+  adads
+</div>
+
+<div class="toast">
+    {{ toast.message }}
+</div>
