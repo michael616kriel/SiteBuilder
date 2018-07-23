@@ -1,0 +1,9 @@
+<div class="input">
+    <label><ng-content></ng-content></label>
+    <!-- Input -->
+    <input type="text" value="" *ngIf="type !== 'select'" [(ngModel)]="value" (change)="onChange()"/>
+    <!-- Select -->
+    <select *ngIf="type === 'select' && data" (change)="onChange()" [(ngModel)]="value">
+        <option *ngFor="let item of data" [ngValue]="item.name">{{ item.name }}</option>
+    </select>
+</div>

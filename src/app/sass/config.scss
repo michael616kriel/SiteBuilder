@@ -1,0 +1,24 @@
+$sidebar-width : 17%;
+$sidebar-right-width : 17%;
+$content-width : calc(100% - #{$sidebar-width} - #{$sidebar-right-width});
+
+$footer-height : 20px;
+$titlebar-height : 20px;
+
+$base-color : #666;
+$light-color : rgb(0, 109, 164);
+$dark-color : #333;
+
+$text-dark : #333;
+$text-light : rgb(179, 179, 179);
+
+
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100%   { transform: rotate(90deg); }
+}
+
+@keyframes spin360 {
+    0%   { transform: rotate(0deg); }
+    100%   { transform: rotate(-360deg); }
+}

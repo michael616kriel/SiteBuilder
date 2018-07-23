@@ -1,0 +1,33 @@
+@import '../../sass/config.scss';
+
+button {
+    &.full-width{
+        width: 100%;
+    }
+    &.group-btn{
+        width: 100%;
+        margin-bottom: 0;
+    }
+    background: $dark-color;
+    border: none;
+    height: 25px;
+    color: $text-light;
+    font-size: 12px;
+    margin-bottom: 5px;
+    &:hover{
+        background: $light-color;
+        transition: 0.2s ease-in-out all; 
+        color : $dark-color;
+    }
+    &.primary {
+        background: $light-color;
+        color : $dark-color;
+    }
+}
+
+.btn-group{
+    button {
+        width: 50%;
+        outline: 1px solid;
+    }
+}

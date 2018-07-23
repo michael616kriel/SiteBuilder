@@ -1,0 +1,30 @@
+@import '../../sass/config.scss';
+
+//inputs
+.input {
+    margin-bottom: 0px;
+    clear: both;
+    & label {
+        font-size: 11px;
+        color : $text-light;
+        float : left;
+    }
+    & input, select {
+        width: 100%;
+        background: $dark-color;
+        border: 0;
+        margin: 5px 0;
+        height: 25px;
+        color: $text-light;
+        padding: 0 0 0 3px;
+        font-size: 11px;
+    }
+    & input[type="checkbox"] {
+        float: right;
+        width: 20px;
+        display: block;
+        margin: 0;
+        height: 20px;
+        margin-bottom: 10px;
+    }
+}

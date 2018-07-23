@@ -1,0 +1,13 @@
+
+<app-tabs (tabClick)="onTabClick($event)">
+    <app-tab [label]="'HTML'" class="html-mode">
+        <codemirror #editorHtml [config]="config" [(ngModel)]="codeEdit.HTML" (change)="codeChange('HTML')"></codemirror>
+    </app-tab>
+    <app-tab [label]="'CSS'" class="css-mode">
+        <codemirror #editorCss [config]="config" [(ngModel)]="codeEdit.CSS" (change)="codeChange('CSS')"></codemirror>
+    </app-tab>
+    <app-tab [label]="'JS'" class="js-mode">
+        <codemirror #editorJs [config]="config" [(ngModel)]="codeEdit.JS" (change)="codeChange('JS')"></codemirror>
+    </app-tab>
+</app-tabs>
+

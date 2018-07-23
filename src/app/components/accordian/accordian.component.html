@@ -1,0 +1,11 @@
+<ul>
+    <li class="accordian">
+        <span (click)="toggle()"> {{ title }}</span>
+        <button class="collapse-btn"><i class="ti" [ngClass]="(hidden) ? 'ti-angle-up' : 'ti-angle-down'"></i></button>
+        <ul class="accordian-menu" [ngClass]="(hidden) ? 'hide' : ''">
+          <li>
+              <ng-content></ng-content>
+          </li>
+        </ul>
+    </li>
+</ul>

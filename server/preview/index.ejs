@@ -19,9 +19,13 @@
                 <%- data.components[k].code.HTML %>
             <% } %>
         </div>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
-        
+
+        <% if(data.framework === 'Handlebars') { %>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+        <% } else { %>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+        <% } %>
+          
         <script>
             <%- data.code.JS %>
 
@@ -30,10 +34,12 @@
             <% } %>
 
         </script>
+
+        <% if(data.framework === 'AngularJS') { %>
+            <%- include('devtools'); %>
+        <% }  %>
         
-
-        <%- include('devtools'); %>
-
+    
         
     </body>
 </html>

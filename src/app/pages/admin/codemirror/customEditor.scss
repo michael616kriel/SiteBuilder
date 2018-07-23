@@ -2,6 +2,30 @@
 
 .CodeMirror {
     height: 100%;
+    font-size: 12px;
+}
+
+.cm-s-ambiance.CodeMirror, .cm-s-ambiance .CodeMirror-gutters {
+    background-image: none;
+}
+
+.cm-s-ambiance .CodeMirror-gutters {
+    background: #202020;
+    border-right: none;
+    box-shadow: none;
+}
+
+.cm-s-ambiance .CodeMirror-linenumber {
+    text-shadow: none;
+    color: #666;
+}
+
+.cm-s-ambiance .CodeMirror-guttermarker-subtle {
+    color: #fff;
+}
+
+.cm-s-ambiance.CodeMirror{
+    box-shadow: none;
 }
 
 .html-mode pre.CodeMirror-line {
@@ -23,3 +47,10 @@
 .html-mode .cm-string {
     color: #ff9c77;
 }
+
+.html-mode .CodeMirror-foldmarker {
+    color: #fff;
+    text-shadow: #fff 0px 0px 1px, #fff 0px 0px 1px, #fff 1px 0px 1px, #fff 0px 1px 1px;
+}
+
+

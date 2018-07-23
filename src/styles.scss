@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('./app/pages/admin/codemirror/customEditor.scss');
+@import './app/sass/config.scss';
+
 
 body, html {
     height: 100%;
@@ -10,6 +12,7 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 * {
@@ -94,3 +97,123 @@ $grid-spacing:3%;
 .col-10 { width:(100% / 1.2) - ($grid-spacing * 2 / 12); }
 .col-11 { width:(100% / 1.090909090909091) - ($grid-spacing * 1 / 12); }
 .col-12 { width:100%; }
+
+
+
+ul.group {
+    list-style: none;
+    padding: 0;
+    font-size: 12px;
+    & li {
+        display: inline-block;
+        width: 33.33%;
+        text-align: center;
+        outline: 1px solid rgba(0,0,0,0.2);
+        color: $text-light;
+        & button, app-button button{
+            margin: 0 !important;
+        }
+    }
+}
+
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $titlebar-height;
+    width: 100%;
+    right: 0;
+    background: $base-color;
+    color : $text-dark;
+    text-align: center;
+    font-size: 14px;
+    & .left {
+        width: 33.33%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        & .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            float: left;
+            height: 100%;
+            & li{
+                display: inline-block;
+                border-right: 1px solid;
+                padding: 3px 10px;
+                font-size: 11px;
+                height: 100%;
+                top: 0px;
+                position: relative;
+                &:hover{
+                    background: #202020;
+                    color: #666;
+                }
+            }
+        }
+    }
+    & .center {
+        width: 33.33%;
+        position: absolute;
+        top: 0;
+        left : 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        padding-top: 1px;
+        font-weight: bolder;
+    }
+    & .right {
+        width: 33.33%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+    }
+}
+
+
+// Root Layout
+.container {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: $dark-color;
+    top : $titlebar-height;
+    & .sidebar {
+        width: $sidebar-width;
+        position: absolute;
+        height: auto;
+        top : 0;
+        bottom: $footer-height;
+        left: 0;
+        background: #444;
+        border-right: 1px solid;
+        overflow-y: auto;
+        &.right{
+            right : 0;
+            left : unset;
+        }
+    }
+    & .content {
+        width: $content-width;
+        position: absolute;
+        top : 0;
+        height: auto;
+        bottom: $footer-height;
+        left: $sidebar-width;
+        padding-top: 5px;
+    }
+    & .footer {
+        width: 100%;
+        position: absolute;
+        height: $footer-height;
+        bottom : 0;
+        left: 0;
+        background: $light-color;
+    }
+}

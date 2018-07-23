@@ -1,0 +1,27 @@
+$light-color : blue;
+
+.toast {
+    position: absolute;
+    bottom: -100px;
+    right: 30px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px;
+    border-left: 2px solid $light-color;
+    opacity: 0;
+    transition: 0.5s ease-in-out all;
+    transform: rotate(30deg);
+    &.show{
+        bottom: 30px;
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    &.hide{
+        bottom: -100px;
+        opacity: 0;
+        transform: rotate(30deg);
+    }
+}

@@ -12,12 +12,34 @@ import { LoginComponent } from './pages/login/login.component';
 import { HttpModule } from '@angular/http';
 import { KeysPipe } from './pipes/keys.pipe';
 
+import { ToastComponent } from './components/toast/toast.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import { CodeEditorComponent } from './components/code-editor/code-editor.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabComponent } from './components/tab/tab.component';
+import { SidebarPaneComponent } from './components/sidebar-pane/sidebar-pane.component';
+import { InputComponent } from './components/input/input.component';
+import { ButtonComponent } from './components/button/button.component';
+import { AccordianComponent } from './components/accordian/accordian.component';
+import { DatabasesComponent } from './pages/databases/databases.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
     LoginComponent,
-    KeysPipe
+    KeysPipe,
+    ToastComponent,
+    ProjectListComponent,
+    CodeEditorComponent,
+    TabsComponent,
+    TabComponent,
+    SidebarPaneComponent,
+    InputComponent,
+    ButtonComponent,
+    AccordianComponent,
+    DatabasesComponent,
   ],
   imports: [
     BrowserModule,
