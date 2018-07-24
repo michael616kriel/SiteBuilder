@@ -28,6 +28,13 @@
     box-shadow: none;
 }
 
+.CodeMirror-foldmarker {
+    color: #fff;
+    text-shadow: #fff 0px 0px 1px, #fff 0px 0px 1px, #fff 1px 0px 1px, #fff 0px 1px 1px;
+}
+
+// HTML Editor
+
 .html-mode pre.CodeMirror-line {
     color: #fff;
 }
@@ -48,9 +55,6 @@
     color: #ff9c77;
 }
 
-.html-mode .CodeMirror-foldmarker {
-    color: #fff;
-    text-shadow: #fff 0px 0px 1px, #fff 0px 0px 1px, #fff 1px 0px 1px, #fff 0px 1px 1px;
-}
+
 
 

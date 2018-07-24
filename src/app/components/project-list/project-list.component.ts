@@ -1,4 +1,4 @@
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import * as $ from 'jquery'
 
 import { Project } from '../../models/project'
@@ -24,7 +24,11 @@ export class ProjectListComponent implements OnInit {
   @Output() projectChange: EventEmitter<Project> = new EventEmitter<Project>()
   @Output() projectsChange: EventEmitter<Project> = new EventEmitter<Project>()
 
-  constructor(private http : Http) { }
+  constructor(private http : Http, private cdRef:ChangeDetectorRef) { }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
 
   ngOnInit() {
 

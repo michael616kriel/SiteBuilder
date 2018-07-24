@@ -25,7 +25,7 @@ import { InputComponent } from './components/input/input.component';
 import { ButtonComponent } from './components/button/button.component';
 import { AccordianComponent } from './components/accordian/accordian.component';
 import { DatabasesComponent } from './pages/databases/databases.component';
-import { SortProjectPipe } from './pipes/sort-project.pipe';
+
 
 
 @NgModule({
@@ -33,7 +33,6 @@ import { SortProjectPipe } from './pipes/sort-project.pipe';
     AppComponent,
     AdminComponent,
     LoginComponent,
-    KeysPipe,
     ToastComponent,
     ProjectListComponent,
     CodeEditorComponent,
@@ -44,8 +43,8 @@ import { SortProjectPipe } from './pipes/sort-project.pipe';
     ButtonComponent,
     AccordianComponent,
     DatabasesComponent,
-    SortPipe,
-    SortProjectPipe,
+    KeysPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,

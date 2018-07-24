@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
     { name : 'AngularJS', active : true },
     { name : 'Handlebars', active : false }
   ]
-
+ 
   comopnentCreate = ''
 
   editModel = {
