@@ -1,17 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { CodemirrorModule } from 'ng2-codemirror';
 import { FormsModule } from '@angular/forms';
-
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
+
+// PAGES
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './pages/login/login.component';
 
-import { HttpModule } from '@angular/http';
+// PIPES
 import { KeysPipe } from './pipes/keys.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
+// COMPONENTS
 import { ToastComponent } from './components/toast/toast.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
@@ -22,6 +25,7 @@ import { InputComponent } from './components/input/input.component';
 import { ButtonComponent } from './components/button/button.component';
 import { AccordianComponent } from './components/accordian/accordian.component';
 import { DatabasesComponent } from './pages/databases/databases.component';
+import { SortProjectPipe } from './pipes/sort-project.pipe';
 
 
 @NgModule({
@@ -40,6 +44,8 @@ import { DatabasesComponent } from './pages/databases/databases.component';
     ButtonComponent,
     AccordianComponent,
     DatabasesComponent,
+    SortPipe,
+    SortProjectPipe,
   ],
   imports: [
     BrowserModule,

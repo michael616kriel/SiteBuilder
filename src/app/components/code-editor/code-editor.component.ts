@@ -250,9 +250,10 @@ export class CodeEditorComponent implements OnInit {
         editor = this.editorJs.instance
       break
     }
-    editor.focus()
+    
     this.activeEditor = editor
     setTimeout(function() {
+        editor.focus()
         editor.refresh();
     },1)
   }

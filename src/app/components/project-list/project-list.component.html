@@ -3,7 +3,7 @@
 
 <!-- PROJECT LIST -->
 <ul class="item-list">
-  <li class="dropdown" [ngClass]="(project.active) ? 'active' : ''" *ngFor="let project of projects">
+  <li class="dropdown" [ngClass]="(project.active) ? 'active' : ''" *ngFor="let project of projects | sortBy : 'name' ">
       <span (click)="setEdit(project, null)">
         <!-- <i class="ti ti-folder"></i> -->
          {{ project.name }} (<span class="subscript">{{ project.framework }}</span>)
@@ -18,7 +18,7 @@
         <li>
           <span><i class="ti ti-plug"></i> Components</span>
           <ul class="dropdown-menu">
-              <li *ngFor="let component of project.components" [ngClass]="(component.active) ? 'active' : ''">
+              <li *ngFor="let component of project.components | sortBy : 'name'" [ngClass]="(component.active) ? 'active' : ''">
                 <span (click)="setEdit(project, component, null)">
                   <i class="ti ti-file"></i> {{ component.name }}
                 </span>
@@ -29,7 +29,7 @@
         <li>
             <span><i class="ti ti-cloud"></i> Services</span>
             <ul class="dropdown-menu">
-                <li *ngFor="let service of project.services" [ngClass]="(service.active) ? 'active' : ''">
+                <li *ngFor="let service of project.services | sortBy : 'name'" [ngClass]="(service.active) ? 'active' : ''">
                   <span (click)="setEdit(project, null, service)">
                     <i class="ti ti-file"></i> {{ service.name }}
                   </span>

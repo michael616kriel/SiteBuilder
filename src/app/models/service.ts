@@ -12,13 +12,13 @@ export class Service {
         if(framework === 'AngularJS'){
             this.code = {
                 HTML : null,
-                JS : null,
+                CSS : null,
                 JS : 'app.service("'+this.name+'", function() { \n\t\n });'
             }
         }else{
             this.code = {
                 HTML : null,
-                JS : null,
+                CSS : null,
                 JS : null
             }
         }

@@ -5,8 +5,6 @@
     <div class="sidebar">
         <app-sidebar-pane [title]="'Workspace'">
                 <app-project-list 
-                [(project)]="project" 
-                [(projects)]="projects" 
                 (projectChange)="projectChange($event)"
                 (onSelectProject)="selectProject($event)" 
                 (onSelectComponent)="selectComponent($event)"
@@ -33,11 +31,11 @@
             </app-accordian>
             
             <app-accordian [title]="'Project'">
-                <app-input [(value)]="project.name">Name</app-input>
+                <app-input [(value)]="projectList.project.name">Name</app-input>
             </app-accordian>
 
             <app-accordian [title]="'Component'">
-                <div *ngFor="let comp of project.components">
+                <div *ngFor="let comp of projectList.project.components">
                     <app-input [(value)]="comp.name" *ngIf="comp.active">Name</app-input>
                 </div>
             </app-accordian>
@@ -48,7 +46,7 @@
 
             <app-accordian [title]="'Clone Project'">
                 <app-input [(value)]="cloneModel.name">Name</app-input>
-                <app-input [(value)]="cloneModel.project" [type]="'select'" [data]="projects">Project Name</app-input>
+                <app-input [(value)]="cloneModel.project" [type]="'select'" [data]="projectList.projects">Project Name</app-input>
                 <app-button (click)="cloneProject()">Clone</app-button>
             </app-accordian>
 
@@ -75,7 +73,7 @@
 
         <app-sidebar-pane [title]="'Utils'">
 
-                <app-input [type]="'select'" [(value)]="comopnentCreate" [data]="project.components">Component</app-input>
+                <app-input [type]="'select'" [(value)]="comopnentCreate" [data]="projectList.project.components">Component</app-input>
                 <app-button (click)="editors.insertTag(comopnentCreate)">Create</app-button>
 
                 <ul class="group">
