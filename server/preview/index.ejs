@@ -33,6 +33,10 @@
                 <%- data.components[k].code.JS %>
             <% } %>
 
+            <% for (var k in data.services) { %>
+                <%- data.services[k].code.JS %>
+            <% } %>
+
         </script>
 
         <% if(data.framework === 'AngularJS') { %>

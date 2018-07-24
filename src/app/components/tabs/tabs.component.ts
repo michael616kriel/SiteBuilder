@@ -40,4 +40,23 @@ export class TabsComponent implements OnInit {
     }
   }
 
+  selectTabByName(name){
+    this.tabs.toArray().forEach(tab => {
+      if(tab.label === name){
+        tab.active = true
+        this.tabClick.emit(tab)
+      }else{
+        tab.active = false
+      }
+    })
+  }
+
+  selectFirst(){
+    let scope = this
+    setTimeout(function() { //just wait for angular ui changes to take effect
+      scope.selectTab(scope.tabs.first, false);
+    },1)
+    
+  }
+
 }

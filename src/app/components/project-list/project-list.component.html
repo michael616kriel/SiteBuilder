@@ -11,7 +11,7 @@
       <button class="close-btn" (click)="delete(project)"><i class="ti ti-close"></i></button>
       <ul class="dropdown-menu">
         <li class="application-item">
-          <span (click)="setEdit(project, null)">
+          <span (click)="setEdit(project, null, null)">
             <i class="ti ti-desktop"></i> Application
           </span>
         </li>
@@ -19,7 +19,7 @@
           <span><i class="ti ti-plug"></i> Components</span>
           <ul class="dropdown-menu">
               <li *ngFor="let component of project.components" [ngClass]="(component.active) ? 'active' : ''">
-                <span (click)="setEdit(project, component)">
+                <span (click)="setEdit(project, component, null)">
                   <i class="ti ti-file"></i> {{ component.name }}
                 </span>
                 <button class="close-btn" (click)="deleteComponent(component, getIndex(component))"><i class="ti ti-trash"></i></button>
@@ -30,7 +30,7 @@
             <span><i class="ti ti-cloud"></i> Services</span>
             <ul class="dropdown-menu">
                 <li *ngFor="let service of project.services" [ngClass]="(service.active) ? 'active' : ''">
-                  <span (click)="setEdit(project, service)">
+                  <span (click)="setEdit(project, null, service)">
                     <i class="ti ti-file"></i> {{ service.name }}
                   </span>
                   <button class="close-btn" (click)="deleteComponent(service, getIndex(service))"><i class="ti ti-trash"></i></button>

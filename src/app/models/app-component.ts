@@ -5,6 +5,7 @@ export class AppComponent {
     public description : string
     public code : { HTML : string, CSS : string, JS : string }
     public active : boolean
+    public supports = ['HTML', 'JS', 'CSS']
 
     constructor(name : string = 'name', framework : string = 'AngularJS'){
         this.name = name

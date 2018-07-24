@@ -15,12 +15,14 @@ export class ProjectListComponent implements OnInit {
 
   @Output('onSelectProject') onSelectProject = new EventEmitter<any>();
   @Output('onSelectComponent') onSelectComponent = new EventEmitter<any>();
+  @Output('onSelectService') onSelectService: EventEmitter<any> = new EventEmitter<any>()
   @Output('onDelete') onDelete = new EventEmitter<any>();
   
 
   @Output() projectChange: EventEmitter<Project> = new EventEmitter<Project>()
   @Output() projectsChange: EventEmitter<Project> = new EventEmitter<Project>()
 
+  
   constructor(private http : Http) { }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class ProjectListComponent implements OnInit {
         if(items[k].id === item.id){
           return k
         }
-      }else{
+      }else if(items[k].name){
         if(items[k].name === item.name){
           return k
         }
@@ -59,10 +61,9 @@ export class ProjectListComponent implements OnInit {
     return null
   }
 
-  setEdit(project, comp){
+  setEdit(project, comp, service){
 
     this.project = project
-    this.projectChange.emit(project)
     let projectIndex = this.findIndex(this.projects, project)
 
     //disable all
@@ -71,20 +72,31 @@ export class ProjectListComponent implements OnInit {
       for(var key in this.projects[k].components){
         this.projects[k].components[key].active = false
       }
+      for(var key in this.projects[k].services){
+        this.projects[k].services[key].active = false
+      }
     }
-    
-    if(comp === null){ //if Project
+
+    if(project && comp === null){ //if Project
       project.active = true
       this.onSelectProject.emit({ projectIndex : projectIndex })
-    }else if(comp){ //if Component
+    }
+    if(project &&  comp){ //if Component
       let componentIndex = this.findIndex(this.projects[projectIndex].components, comp)
       project.active = true
       comp.active = true
       this.onSelectComponent.emit({ projectIndex : projectIndex, componentIndex : componentIndex })
     }
+    if(project && service){ //if Service
+      let serviceIndex = this.findIndex(this.projects[projectIndex].services, service)
+      project.active = true
+      service.active = true
+      this.onSelectService.emit({ projectIndex : projectIndex, serviceIndex : serviceIndex })
+    }
 
+    //re-enable dropdowns
     this.dropdown()
-
+    this.projectChange.emit(project)
   }
 
   delete(project){
@@ -97,7 +109,7 @@ export class ProjectListComponent implements OnInit {
     this.projects.splice(projectIndex, 1)
 
     if(this.project.id === project.id){
-      this.setEdit(this.projects[0], null)
+      this.setEdit(this.projects[0], null, null)
     }
 
     this.http.post('http://localhost:8081/project/delete', { id : project.id }).subscribe(res => {
@@ -116,6 +128,20 @@ export class ProjectListComponent implements OnInit {
 
     this.http.post('http://localhost:8081/project/update', { data : this.project, id : this.project.id }).subscribe(res => {
       this.onDelete.emit({ name : 'component', projectIndex : projectIndex, index : key})
+    })
+
+
+  }
+
+  deleteService(service, key){
+    if(!confirm('are you sure you want to delete : ' + service.name + ' ?')){
+      return
+    }
+    this.project.services.splice(key, 1)
+    let projectIndex = this.findIndex(this.projects, this.project)
+
+    this.http.post('http://localhost:8081/project/update', { data : this.project, id : this.project.id }).subscribe(res => {
+      this.onDelete.emit({ name : 'service', projectIndex : projectIndex, index : key})
     })
 
 

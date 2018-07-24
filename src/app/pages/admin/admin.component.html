@@ -10,6 +10,7 @@
                 (projectChange)="projectChange($event)"
                 (onSelectProject)="selectProject($event)" 
                 (onSelectComponent)="selectComponent($event)"
+                (onSelectService)="selectService($event)"
                 (onDelete)="onDelete($event)"></app-project-list>
         </app-sidebar-pane>
     </div>
@@ -62,6 +63,12 @@
                 <app-input [(value)]="createModels.component.name">Name</app-input>
                 <app-input [(value)]="createModels.component.description">Description</app-input>
                 <app-button (click)="createComponent()">Create</app-button>
+            </app-accordian>
+
+            <app-accordian [title]="'New Service'">
+                <app-input [(value)]="createModels.service.name">Name</app-input>
+                <app-input [(value)]="createModels.service.description">Description</app-input>
+                <app-button (click)="createService()">Create</app-button>
             </app-accordian>
 
         </app-sidebar-pane>

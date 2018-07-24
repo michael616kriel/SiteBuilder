@@ -29,6 +29,7 @@ import "codemirror/addon/search/matchesonscrollbar.js"
 import "codemirror/addon/search/jump-to-line.js"
 
 import { Project } from '../../models/project'
+import { TabsComponent } from '../tabs/tabs.component';
 
 @Component({
   selector: 'app-code-editor',
@@ -37,6 +38,8 @@ import { Project } from '../../models/project'
 })
 export class CodeEditorComponent implements OnInit {
   
+  @ViewChild('tabs') tabs : TabsComponent
+
   @ViewChild('editorHtml') editorHtml : any
   @ViewChild('editorJs') editorJs : any
   @ViewChild('editorCss') editorCss : any
@@ -146,6 +149,7 @@ export class CodeEditorComponent implements OnInit {
 
 
 
+
   ngOnDestroy(){
      this.editorHtml.instance.toTextArea()
      this.editorJs.instance.toTextArea()
@@ -183,6 +187,25 @@ export class CodeEditorComponent implements OnInit {
               CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
         }
     })
+  }
+
+  supports = ['HTML', 'JS', 'CSS']
+
+  support(supportArray){
+    if(!this.tabs){
+      return
+    }
+    this.supports = supportArray
+    if(!this.hasSupport('HTML') && !this.hasSupport('CSS') && this.hasSupport('JS')){ //if just js
+      this.tabs.selectTabByName('JS')
+    }else{
+      this.tabs.selectFirst()
+    }
+
+  }
+
+  hasSupport(type){
+    return this.supports.includes(type)
   }
 
   toggleWrap(){
@@ -240,12 +263,15 @@ export class CodeEditorComponent implements OnInit {
     switch(data){
       case 'HTML' :
         editor = this.editorHtml.instance
+        editor.setOption('mode', 'xml')
       break
       case 'CSS' :
         editor = this.editorCss.instance
+        editor.setOption('mode', 'css')
       break
       case 'JS' :
         editor = this.editorJs.instance
+        editor.setOption('mode', 'javascript')
       break
     }
     this.codeEdit[data] = editor.getValue()

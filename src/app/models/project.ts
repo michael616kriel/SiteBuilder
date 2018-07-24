@@ -1,5 +1,5 @@
 import { AppComponent } from './app-component'
-
+import { Service } from './service'
 export class Project {
     
     id : string
@@ -8,11 +8,14 @@ export class Project {
     public description : string = 'project description'
     public code : { HTML : string, CSS : string, JS : string }
     public components : Array<AppComponent>
+    public services : Array<Service>
     public active : boolean
+    public supports = ['HTML', 'JS', 'CSS']
 
     constructor(name : string = 'project', framework : string = 'AngularJS'){
         this.name = name
         this.components = new Array<AppComponent>()
+        this.services = new Array<Service>()
         this.framework = framework
         let formatted = name.toLowerCase().replace(' ', '_')
         if(framework === 'AngularJS'){
